@@ -1,11 +1,12 @@
 import { promises as fs } from 'fs';
-import path from 'path';
 import { NextResponse } from 'next/server';
+import path from 'path';
+
 import type {
-  PackageJson,
   AuthorObject,
-  RepositoryObject,
   BugsObject,
+  PackageJson,
+  RepositoryObject,
 } from './project-info.types';
 
 // --- Helper Validation Functions ---

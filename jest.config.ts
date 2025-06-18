@@ -1,0 +1,39 @@
+import nextJest from 'next/jest.js';
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files
+  dir: './',
+});
+
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^next/navigation$': '<rootDir>/src/__mocks__/next-navigation.ts',
+    '^next/image$': '<rootDir>/src/__mocks__/next-image.ts',
+    '\\.svg$': '<rootDir>/src/__mocks__/svg-mock.tsx',
+  },
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.stories.{js,jsx,ts,tsx}',
+    /**
+     * Exclude API routes from coverage - we're only mocking APIs here,
+     *   so we don't need strong quality control for these files.
+     */
+    '!src/app/api/**/*',
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 75,
+      functions: 75,
+      lines: 75,
+      statements: 75,
+    },
+  },
+};
+
+// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+export default createJestConfig(customJestConfig);

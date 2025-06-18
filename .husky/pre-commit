@@ -1,1 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Install dependencies if needed
+npm install
+
+# Run lint-staged (lints and fixes auto-fixable issues)
 npm run lint-staged
+
+# Run tests
+npm test
