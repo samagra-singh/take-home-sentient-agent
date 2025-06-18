@@ -1,0 +1,11 @@
+{
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  /**
+   * Temporary fix.
+   * Setting up Prettier with ESLint is too much of a hassle for now.
+   */
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
