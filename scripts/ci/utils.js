@@ -30,9 +30,17 @@ export const validateOutputPatterns = (output, expectedPatterns, scriptName) => 
       continue;
     }
 
-    const { pattern, expectMany = false } = expectedPatterns[patternIndex];
+    const { pattern, expectMany = false, optional = false } = expectedPatterns[patternIndex];
 
-    if (expectMany) {
+    if (optional) {
+      if (!pattern.test(linesInOutput[lineIndex])) {
+        console.warn(`❌ ${scriptName} output missing expected pattern (optional):`);
+        console.warn(`  - Expected pattern: ${pattern.source}`);
+        console.warn(`  - Received at line ${lineIndex + 1}: "${linesInOutput[lineIndex] || 'EOF'}"`);
+      }
+      lineIndex++;
+      patternIndex++;
+    } else if (expectMany) {
       // For expectMany patterns, keep matching until we find a line that doesn't match
       // Must match at least once
       let matchCount = 0;

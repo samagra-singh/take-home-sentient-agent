@@ -15,6 +15,12 @@ const runLint = () => {
       { pattern: /^> take-home-sentient-agent@\d+\.\d+\.\d+ lint$/ },
       { pattern: /^> next lint$/ },
 
+      // Next telemetry warning
+      { pattern: /^Attention: Next\.js now collects completely anonymous telemetry regarding usage\.$/, optional: true },
+      { pattern: /^This information is used to shape Next\.js' roadmap and prioritize features\.$/, optional: true },
+      { pattern: /^You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:$/, optional: true },
+      { pattern: /^https:\/\/nextjs\.org\/telemetry$/, optional: true },
+
       // ESLint output - should be clean with no issues
       { pattern: /^✔ No ESLint warnings or errors$/ },
     ];
