@@ -18,6 +18,9 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "npx eslint --fix"
+    ],
+    "*.{test,spec}.{js,jsx,ts,tsx}": [
+      "npx jest"
     ]
   },
   "dependencies": {
