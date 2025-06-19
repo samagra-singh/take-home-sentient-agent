@@ -18,6 +18,13 @@ export default async function HomePage() {
     console.debug('process.env.VERCEL_PROJECT_PRODUCTION_URL', process.env.VERCEL_PROJECT_PRODUCTION_URL);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/project-info`,
+      {
+        headers: {
+          ...(process.env.VERCEL_AUTOMATION_BYPASS_HEADER && {
+            'x-vercel-automation-bypass': process.env.VERCEL_AUTOMATION_BYPASS_HEADER,
+          }),
+        },
+      },
     );
     console.debug('response', response);
 
