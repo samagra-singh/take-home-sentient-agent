@@ -1,0 +1,30 @@
+name: Quality Gate
+
+on:
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: node scripts/ci/run-lint.js
+
+      - name: Run tests
+        run: node scripts/ci/run-tests.js
+
+      - name: Build project
+        run: node scripts/ci/run-build.js
