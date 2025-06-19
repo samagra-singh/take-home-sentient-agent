@@ -16,6 +16,7 @@ export default async function HomePage() {
     console.debug('process.env.VERCEL_TARGET_ENV', process.env.VERCEL_TARGET_ENV);
     console.debug('process.env.VERCEL_URL', process.env.VERCEL_URL);
     console.debug('process.env.VERCEL_PROJECT_PRODUCTION_URL', process.env.VERCEL_PROJECT_PRODUCTION_URL);
+    console.debug('process.env.VERCEL_AUTOMATION_BYPASS_HEADER', process.env.VERCEL_AUTOMATION_BYPASS_HEADER);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/project-info`,
       {
