@@ -12,7 +12,12 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^next/navigation$': '<rootDir>/src/__mocks__/next-navigation.ts',
     '^next/image$': '<rootDir>/src/__mocks__/next-image.ts',
-    '\\.svg$': '<rootDir>/src/__mocks__/svg-mock.tsx',
+    /**
+     * Do not modify the SVG match pattern.
+     * This patters is explicitly needed to override the default SVG mocks from next/jest.
+     * Run tests with --debug for more details.
+     */
+    '^.+\\.(svg)$': '<rootDir>/src/__mocks__/svg-mock.tsx',
   },
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   collectCoverageFrom: [

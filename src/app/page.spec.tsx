@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-
 import HomePage from './page';
 
 // Define the interfaces locally to match what the component expects
@@ -72,23 +71,41 @@ describe('HomePage', () => {
   });
 
   it('renders error state when API call fails', async () => {
+    // Suppress expected console errors
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
     const errorMessage = 'Failed to fetch project info';
+
     global.fetch = jest.fn().mockResolvedValueOnce({
       ok: false,
       status: 500,
       json: async () => ({ error: errorMessage }),
     });
+
     render(await HomePage());
     expect(screen.getByText('Error:')).toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenLastCalledWith('Server-side fetch for /api/project-info failed:', new Error(errorMessage));
+
+    console.error = originalConsoleError;
   });
 
   it('renders error state when fetch throws an exception', async () => {
+    // Suppress expected console errors
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
     const errorMessage = 'Network error';
+
     global.fetch = jest.fn().mockRejectedValueOnce(new Error(errorMessage));
+
     render(await HomePage());
     expect(screen.getByText('Error:')).toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenLastCalledWith('Server-side fetch for /api/project-info failed:', new Error(errorMessage));
+
+    console.error = originalConsoleError;
   });
 
   it('renders without author information when not provided', async () => {

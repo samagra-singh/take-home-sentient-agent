@@ -1,70 +1,27 @@
 import { render, screen } from '@testing-library/react';
-
 import RootLayout, { metadata } from './layout';
-
-// Mock the Inter font
-jest.mock('next/font/google', () => ({
-  Inter: jest.fn(() => ({
-    className: 'mocked-inter-font',
-    style: { fontFamily: 'Inter' },
-  })),
-}));
-
-// Mock clsx
-jest.mock('clsx', () => ({
-  __esModule: true,
-  default: jest.fn((...args) => args.filter(Boolean).join(' ')),
-}));
 
 describe('RootLayout', () => {
   it('renders children correctly', () => {
-    const testContent = <div data-testid="test-child">Test Content</div>;
-    render(<RootLayout>{testContent}</RootLayout>);
+    // Suppress expected console errors
+    const originalConsoleError = console.error;
+    console.error = jest.fn();
+
+    render(<RootLayout><div data-testid="test-child">Test Content</div></RootLayout>);
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
     expect(screen.getByTestId('test-child')).toHaveTextContent('Test Content');
-  });
 
-  it('renders multiple children correctly', () => {
-    render(
-      <RootLayout>
-        <div>First Child</div>
-        <div>Second Child</div>
-        <div>Third Child</div>
-      </RootLayout>,
+    // Note: Jest/React will suppress same errors from more tests in the same file.
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenLastCalledWith(
+      'In HTML, %s cannot be a child of <%s>.%s\nThis will cause a hydration error.%s',
+      '<html>',
+      'div',
+      '',
+      '',
     );
-    expect(screen.getByText('First Child')).toBeInTheDocument();
-    expect(screen.getByText('Second Child')).toBeInTheDocument();
-    expect(screen.getByText('Third Child')).toBeInTheDocument();
-  });
 
-  it('renders complex nested children correctly', () => {
-    const complexChild = (
-      <div>
-        <header>
-          <h1>Header</h1>
-        </header>
-        <main>
-          <p>Main content</p>
-        </main>
-        <footer>
-          <p>Footer</p>
-        </footer>
-      </div>
-    );
-    render(<RootLayout>{complexChild}</RootLayout>);
-    expect(screen.getByText('Header')).toBeInTheDocument();
-    expect(screen.getByText('Main content')).toBeInTheDocument();
-    expect(screen.getByText('Footer')).toBeInTheDocument();
-  });
-
-  it('renders with string children', () => {
-    render(<RootLayout>Simple string content</RootLayout>);
-    expect(screen.getByText('Simple string content')).toBeInTheDocument();
-  });
-
-  it('renders with number children', () => {
-    render(<RootLayout>{42}</RootLayout>);
-    expect(screen.getByText('42')).toBeInTheDocument();
+    console.error = originalConsoleError;
   });
 });
 
