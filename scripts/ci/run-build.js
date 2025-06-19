@@ -18,6 +18,7 @@ const runBuild = () => {
       // Next.js version and build process
       { pattern: /^▲ Next\.js \d+\.\d+\.\d+$/ },
       { pattern: /^Creating an optimized production build \.\.\.$/ },
+      { pattern: /^Retrying\s+\d+\/\d+$/, optional: true },
       { pattern: /^✓ Compiled successfully in \d+(\.\d+)?m?s$/ },
       { pattern: /^Linting and checking validity of types \.\.\.$/ },
       { pattern: /^Collecting page data \.\.\.$/ },
