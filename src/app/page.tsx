@@ -10,16 +10,9 @@ export default async function HomePage() {
   let error: string | null = null;
 
   try {
-    console.debug(new Date().getTime());
-    console.debug('NEXT_PUBLIC_BASE_URL', process.env.NEXT_PUBLIC_BASE_URL);
-    console.debug('process.env.VERCEL_ENV', process.env.VERCEL_ENV);
-    console.debug('process.env.VERCEL_TARGET_ENV', process.env.VERCEL_TARGET_ENV);
-    console.debug('process.env.VERCEL_URL', process.env.VERCEL_URL);
-    console.debug('process.env.VERCEL_PROJECT_PRODUCTION_URL', process.env.VERCEL_PROJECT_PRODUCTION_URL);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/project-info`,
     );
-    console.debug('response', response);
 
     if (!response.ok) {
       const errorData = await response.json();
