@@ -49,7 +49,7 @@ export default async function HomePage() {
             <h1 className="text-3xl font-extrabold pb-3 mb-4 border-b-2 border-gray-300">
               {data.name}{' '}
               <span className="font-mono text-xl text-teal-600">
-                v{data.version} DEV
+                v{data.version}
               </span>
             </h1>
 
