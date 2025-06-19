@@ -37,9 +37,10 @@ export const validateOutputPatterns = (output, expectedPatterns, scriptName) => 
         console.warn(`❌ ${scriptName} output missing expected pattern (optional):`);
         console.warn(`  - Expected pattern: ${pattern.source}`);
         console.warn(`  - Received at line ${lineIndex + 1}: "${linesInOutput[lineIndex] || 'EOF'}"`);
+      } else {
+        patternIndex++;
       }
       lineIndex++;
-      patternIndex++;
     } else if (expectMany) {
       // For expectMany patterns, keep matching until we find a line that doesn't match
       // Must match at least once
