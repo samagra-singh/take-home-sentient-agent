@@ -13,7 +13,8 @@ export const getNPMScriptOutput = (scriptName) => {
 /**
  * Validates command output against expected patterns
  * @param {string} output - Raw command output
- * @param {Array<{pattern: RegExp, expectMany?: boolean}>} expectedPatterns - Array of patterns to match
+ * @param {Array<{pattern: RegExp, expectMany?: boolean, optional?: boolean}>} expectedPatterns
+ * - `expectMany` and `optional` can't both be `true`. Not supported yet.
  * @param {string} scriptName - Name of the script for error messages
  */
 export const validateOutputPatterns = (output, expectedPatterns, scriptName) => {
@@ -38,9 +39,9 @@ export const validateOutputPatterns = (output, expectedPatterns, scriptName) => 
         console.warn(`  - Expected pattern: ${pattern.source}`);
         console.warn(`  - Received at line ${lineIndex + 1}: "${linesInOutput[lineIndex] || 'EOF'}"`);
       } else {
-        patternIndex++;
+        lineIndex++;
       }
-      lineIndex++;
+      patternIndex++;
     } else if (expectMany) {
       // For expectMany patterns, keep matching until we find a line that doesn't match
       // Must match at least once
