@@ -3,6 +3,8 @@ import ExternalLinkIcon from '../components/icons/external-link.svg';
 import MailIcon from '../components/icons/mail.svg';
 import type { ProjectInfoAPIResponse } from './api/project-info/route';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   let data: ProjectInfoAPIResponse | null = null;
   let error: string | null = null;
@@ -10,15 +12,6 @@ export default async function HomePage() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/project-info`,
-      /**
-       * We don't expect this to change after build, but as this is in an API,
-       *   we can't generate it at build time.
-       */
-      {
-        next: {
-          revalidate: 3600,
-        },
-      },
     );
 
     if (!response.ok) {
