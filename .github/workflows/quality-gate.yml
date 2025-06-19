@@ -18,7 +18,7 @@ jobs:
           cache: 'npm'
 
       - name: Setup
-        run: npm CI
+        run: npm ci
 
       - name: Lint
         run: node scripts/ci/run-lint.js
