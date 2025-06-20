@@ -14,7 +14,8 @@
     "lint-staged": "lint-staged",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "ci:test-all-scripts": "node scripts/ci/test-scripts.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -28,7 +29,8 @@
     "clsx": "^2.1.1",
     "next": "15.3.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-tooltip": "^5.29.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -41,11 +43,11 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "eslint-plugin-jest": "^29.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
     "eslint-plugin-testing-library": "^7.5.3",
     "husky": "^9.1.7",
     "jest": "^30.0.0",

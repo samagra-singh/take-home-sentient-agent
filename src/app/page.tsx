@@ -1,11 +1,19 @@
 import React from 'react';
-import ExternalLinkIcon from '../components/icons/external-link.svg';
-import MailIcon from '../components/icons/mail.svg';
-import type { ProjectInfoAPIResponse } from './api/project-info/route';
+import type { Metadata } from 'next';
+import { TooltipIds } from '@/utils/constants/global';
+import ExternalLinkIcon from '@/components/icons/external-link.svg';
+import MailIcon from '@/components/icons/mail.svg';
+import type { ProjectInfoAPIResponse } from '@/app/api/project-info/route';
+
+export const metadata: Metadata = {
+  title: 'Sentient Agent',
+  description:
+    'A basic AI chat agent built with Next.js and mock API routes (Take home assignment for Sentient Foundation)',
+};
 
 export const dynamic = 'force-dynamic';
 
-export default async function HomePage() {
+const HomePage = async () => {
   let data: ProjectInfoAPIResponse | null = null;
   let error: string | null = null;
 
@@ -61,13 +69,15 @@ export default async function HomePage() {
                   {data.author.name}
                 </span>
                 {data.author.email && (
-                  <a
-                    href={`mailto:${data.author.email}`}
-                    className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
-                    aria-label={`Send email to ${data.author.name}`}
-                  >
-                    <MailIcon className="w-6 h-6 inline-block" />
-                  </a>
+                    <a
+                      href={`mailto:${data.author.email}`}
+                      className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                      aria-label={`Send email to ${data.author.name}`}
+                      data-tooltip-id={TooltipIds.CLICKABLE_NO_FOCUS}
+                      data-tooltip-content={`Send email to ${data.author.name}`}
+                    >
+                      <MailIcon className="w-6 h-6 inline-block" />
+                    </a>
                 )}
               </p>
             )}
@@ -80,15 +90,18 @@ export default async function HomePage() {
             {/* Repository Link */}
             {data.homepage && (
               <div className="mt-4">
-                <a
-                  href={data.homepage}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200 text-base"
-                >
-                  View Repository
-                  <ExternalLinkIcon className="w-5 h-5 ml-2" />
-                </a>
+                  <a
+                    href={data.homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200 text-base"
+                    aria-label="View repository in a new tab"
+                    data-tooltip-id={TooltipIds.CLICKABLE_NO_FOCUS}
+                    data-tooltip-content="View repository in a new tab"
+                  >
+                    View Repository
+                    <ExternalLinkIcon className="w-5 h-5 ml-2" />
+                  </a>
               </div>
             )}
           </>
@@ -96,4 +109,6 @@ export default async function HomePage() {
       </div>
     </div>
   );
-}
+};
+
+export default HomePage;
