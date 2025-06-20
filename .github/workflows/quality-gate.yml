@@ -1,8 +1,10 @@
 name: Quality Gate
 
 on:
+  push:
+    branches: [ 'master', 'dev' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ 'master', 'dev' ]
 
 jobs:
   quality-gate:
