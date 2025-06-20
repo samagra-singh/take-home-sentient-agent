@@ -49,11 +49,11 @@ const HomePage = async () => {
 
             {/* Author Information */}
             {data.author && (
-              <p className="text-xl text-gray-700 mb-2 flex items-center justify-center gap-2">
+              <p className="text-xl text-gray-700 mb-2">
                 By{' '}
                 <span className="font-semibold text-gray-800">
                   {data.author.name}
-                </span>
+                </span>{' '}
                 {data.author.email && (
                     <a
                       href={`mailto:${data.author.email}`}
@@ -62,7 +62,7 @@ const HomePage = async () => {
                       data-tooltip-id={TooltipIds.CLICKABLE_NO_FOCUS}
                       data-tooltip-content={`Send email to ${data.author.name}`}
                     >
-                      <MailIcon className="w-6 h-6 inline-block" />
+                      <MailIcon className="w-6 h-6 inline-block fill-current" />
                     </a>
                 )}
               </p>
@@ -83,10 +83,10 @@ const HomePage = async () => {
                     className="inline-flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors duration-200 text-base"
                     aria-label="View repository in a new tab"
                     data-tooltip-id={TooltipIds.CLICKABLE_NO_FOCUS}
-                    data-tooltip-content="View repository in a new tab"
+                    data-tooltip-content="View repository <br />(in a new tab)"
                   >
                     View Repository
-                    <ExternalLinkIcon className="w-5 h-5 ml-2" />
+                    <ExternalLinkIcon className="w-5 h-5 ml-2 stroke-current" />
                   </a>
               </div>
             )}
