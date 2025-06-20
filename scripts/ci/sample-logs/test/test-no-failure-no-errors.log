@@ -1,0 +1,22 @@
+
+> take-home-sentient-agent@0.0.1 test
+> jest
+
+PASS src/app/layout.spec.tsx
+PASS src/app/page.spec.tsx
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-----------------|---------|----------|---------|---------|-------------------
+All files        |   81.25 |       75 |     100 |   85.71 |
+ app             |   80.64 |       75 |     100 |   85.18 |
+  layout.tsx     |     100 |      100 |     100 |     100 |
+  page.tsx       |   71.42 |       75 |     100 |   77.77 | 26-27,34-35
+ utils/constants |     100 |      100 |     100 |     100 |
+  global.ts      |     100 |      100 |     100 |     100 |
+-----------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        3.078 s
+Ran all test suites.
