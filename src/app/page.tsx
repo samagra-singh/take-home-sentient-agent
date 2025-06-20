@@ -1,9 +1,10 @@
-import React from 'react';
 import type { Metadata } from 'next';
-import { TooltipIds } from '@/utils/constants/global';
+import React from 'react';
+
+import type { ProjectInfoAPIResponse } from '@/app/api/project-info/route';
 import ExternalLinkIcon from '@/components/icons/external-link.svg';
 import MailIcon from '@/components/icons/mail.svg';
-import type { ProjectInfoAPIResponse } from '@/app/api/project-info/route';
+import { TooltipIds } from '@/utils/constants/global';
 
 export const metadata: Metadata = {
   title: 'Sentient Agent',

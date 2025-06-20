@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+
 import HomePage from './page';
 
 let mockFetch: jest.Mock;

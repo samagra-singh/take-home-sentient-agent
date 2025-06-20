@@ -2,9 +2,11 @@
 
 import './globals.css';
 import 'react-tooltip/dist/react-tooltip.css';
+
 import cx from 'clsx';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { Inter } from 'next/font/google';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+
 import { TooltipIds } from '@/utils/constants/global';
 
 const inter = Inter({ subsets: ['latin'] });
