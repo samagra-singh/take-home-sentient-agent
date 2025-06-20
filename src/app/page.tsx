@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import React from 'react';
 
-import type { ProjectInfoAPIResponse } from '@/app/api/project-info/route';
+import type { GetProjectInfoResponse } from '@/actions/getProjectInfo';
+import { getProjectInfo } from '@/actions/getProjectInfo';
 import ExternalLinkIcon from '@/components/icons/external-link.svg';
 import MailIcon from '@/components/icons/mail.svg';
 import { TooltipIds } from '@/utils/constants/global';
@@ -12,27 +13,14 @@ export const metadata: Metadata = {
     'A basic AI chat agent built with Next.js and mock API routes (Take home assignment for Sentient Foundation)',
 };
 
-export const dynamic = 'force-dynamic';
-
 const HomePage = async () => {
-  let data: ProjectInfoAPIResponse | null = null;
+  let data: GetProjectInfoResponse | null = null;
   let error: string | null = null;
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/project-info`,
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.error || `HTTP error! Status: ${response.status}`,
-      );
-    }
-
-    data = await response.json();
+    data = await getProjectInfo();
   } catch (err) {
-    console.error('Server-side fetch for /api/project-info failed:', err);
+    console.error('Server action `getProjectInfo` failed:', err);
     error = (err as Error).message;
   }
 
@@ -44,10 +32,7 @@ const HomePage = async () => {
             <h2 className="font-bold text-xl mb-2">Error:</h2>
             <p>{error}</p>
             <p className="text-sm mt-2">
-              Please check your `package.json` file or the `/api/project-info`
-              route for issues. Ensure `NEXT_PUBLIC_BASE_URL` is correctly set
-              in your `.env` for production, or remove it if running locally
-              without one.
+              Please check your `package.json` file for issues.
             </p>
           </div>
         )}

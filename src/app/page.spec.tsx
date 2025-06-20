@@ -2,20 +2,22 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import HomePage from './page';
 
-let mockFetch: jest.Mock;
+// Mock the server action
+jest.mock('@/actions/getProjectInfo', () => ({
+  getProjectInfo: jest.fn(),
+}));
+
+import { getProjectInfo } from '@/actions/getProjectInfo';
+
+const mockGetProjectInfo = getProjectInfo as jest.MockedFunction<typeof getProjectInfo>;
 
 describe('HomePage', () => {
   beforeEach(() => {
-    mockFetch = jest.fn();
-    global.fetch = mockFetch;
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
+    mockGetProjectInfo.mockClear();
   });
 
   it('renders without error', async () => {
-    // Mock successful fetch response
+    // Mock successful server action response
     const mockProjectInfoData = {
       name: 'Test Project',
       version: '1.0.0',
@@ -26,10 +28,7 @@ describe('HomePage', () => {
       },
       homepage: 'https://example.com',
     };
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProjectInfoData,
-    });
+    mockGetProjectInfo.mockResolvedValueOnce(mockProjectInfoData);
 
     render(await HomePage());
 
@@ -37,7 +36,6 @@ describe('HomePage', () => {
     await waitFor(() => {
       expect(screen.getByText(mockProjectInfoData.name)).toBeInTheDocument();
     });
-    expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(mockFetch).toHaveBeenCalledWith('/api/project-info');
+    expect(mockGetProjectInfo).toHaveBeenCalledTimes(1);
   });
 });
