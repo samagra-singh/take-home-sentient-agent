@@ -4,17 +4,32 @@ import './globals.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
 import cx from 'clsx';
-import { Inter } from 'next/font/google';
+import { Nunito_Sans, Plus_Jakarta_Sans } from 'next/font/google';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 import { TooltipIds } from '@/utils/constants/global';
 
-const inter = Inter({ subsets: ['latin'] });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+});
+const nunitoSans = Nunito_Sans({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-nunito',
+});
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={cx(inter.className, 'bg-gray-50 text-gray-800')}>
+      <body
+        className={cx(
+          plusJakartaSans.variable,
+          nunitoSans.variable,
+          'font-(family-name:--font-jakarta) bg-gray-50 text-gray-800',
+        )}
+      >
         {children}
         {/* Default tooltip */}
         <ReactTooltip
