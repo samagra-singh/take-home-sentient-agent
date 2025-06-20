@@ -1,0 +1,44 @@
+
+> take-home-sentient-agent@0.0.1 test
+> jest
+
+PASS src/app/layout.spec.tsx
+PASS src/app/page.spec.tsx
+  ● Console
+
+    console.error
+      Server-side fetch for /api/project-info failed: Error: Failed to fetch project info
+          at HomePage (/Users/samagra/Downloads/take-home-sentient-agent/src/app/page.tsx:19:13)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at Object.<anonymous> (/Users/samagra/Downloads/take-home-sentient-agent/src/app/page.spec.tsx:85:12)
+
+      24 |     data = await response.json();
+      25 |   } catch (err) {
+    > 26 |     console.error('Server-side fetch for /api/project-info failed:', err);
+         |             ^
+      27 |     error = (err as Error).message;
+      28 |   }
+      29 |
+
+      at error (src/app/page.tsx:26:13)
+      at Object.<anonymous> (src/app/page.spec.tsx:85:12)
+
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-----------------|---------|----------|---------|---------|-------------------
+All files        |   81.25 |       75 |     100 |   85.71 |
+ app             |   80.64 |       75 |     100 |   85.18 |
+  layout.tsx     |     100 |      100 |     100 |     100 |
+  page.tsx       |   71.42 |       75 |     100 |   77.77 | 26-27,34-35
+ utils/constants |     100 |      100 |     100 |     100 |
+  global.ts      |     100 |      100 |     100 |     100 |
+-----------------|---------|----------|---------|---------|-------------------
+Jest: "global" coverage threshold for statements (100%) not met: 81.25%
+Jest: "global" coverage threshold for branches (100%) not met: 75%
+Jest: "global" coverage threshold for lines (100%) not met: 85.71%
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        2.6 s
+Ran all test suites.

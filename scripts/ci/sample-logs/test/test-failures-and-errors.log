@@ -1,0 +1,90 @@
+
+> take-home-sentient-agent@0.0.1 test
+> jest
+
+PASS src/app/layout.spec.tsx
+FAIL src/app/page.spec.tsx
+  ● Console
+
+    console.error
+      Server-side fetch for /api/project-info failed: Error: Failed to fetch project info
+          at HomePage (/Users/samagra/Downloads/take-home-sentient-agent/src/app/page.tsx:19:13)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at Object.<anonymous> (/Users/samagra/Downloads/take-home-sentient-agent/src/app/page.spec.tsx:85:12)
+
+      24 |     data = await response.json();
+      25 |   } catch (err) {
+    > 26 |     console.error('Server-side fetch for /api/project-info failed:', err);
+         |             ^
+      27 |     error = (err as Error).message;
+      28 |   }
+      29 |
+
+      at error (src/app/page.tsx:26:13)
+      at Object.<anonymous> (src/app/page.spec.tsx:85:12)
+
+  ● HomePage › renders error state when API call fails
+
+    TestingLibraryElementError: Unable to find an element with the text: Failed to fetch project info (normalized from 'Failed to fetch project info '). This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-h-screen flex items-center justify-center p-4 bg-gray-50 text-gray-900"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-gray-200"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"text-red-600"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"font-bold text-xl mb-2"[39m
+              [36m>[39m
+                [0mError:[0m
+              [36m</h2>[39m
+              [36m<p>[39m
+                [0mFailed to fetch project info [0m
+              [36m</p>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm mt-2"[39m
+              [36m>[39m
+                [0mPlease check your `package.json` file or the `/api/project-info` route for issues. Ensure `NEXT_PUBLIC_BASE_URL` is correctly set in your `.env` for production, or remove it if running locally without one.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      85 |     render(await HomePage());
+      86 |     expect(screen.getByText('Error:')).toBeInTheDocument();
+    > 87 |     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+         |                   ^
+      88 |     // expect(console.error).toHaveBeenCalledTimes(1);
+      89 |     // expect(console.error).toHaveBeenLastCalledWith('Server-side fetch for /api/project-info failed:', new Error(errorMessage));
+      90 |
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+      at Object.getByText (src/app/page.spec.tsx:87:19)
+
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+-----------------|---------|----------|---------|---------|-------------------
+All files        |   81.25 |       75 |     100 |   85.71 |
+ app             |   80.64 |       75 |     100 |   85.18 |
+  layout.tsx     |     100 |      100 |     100 |     100 |
+  page.tsx       |   71.42 |       75 |     100 |   77.77 | 26-27,34-35
+ utils/constants |     100 |      100 |     100 |     100 |
+  global.ts      |     100 |      100 |     100 |     100 |
+-----------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 11 passed, 12 total
+Snapshots:   0 total
+Time:        3.651 s
+Ran all test suites.
