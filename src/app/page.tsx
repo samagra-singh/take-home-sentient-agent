@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { createClient } from 'redis';
 
 import type { GetProjectInfoResponse } from '@/actions/getProjectInfo';
 import { getProjectInfo } from '@/actions/getProjectInfo';
@@ -22,6 +23,14 @@ const HomePage = async () => {
   } catch (err) {
     console.error('Server action `getProjectInfo` failed:', err);
     error = (err as Error).message;
+  }
+
+  try {
+    const redis =  await createClient({ url: process.env.STORAGE_REDIS_URL }).connect();
+    const value = await redis.get('test');
+    console.log('Redis value:', value);
+  } catch (err) {
+    console.error('Redis connection failed:', err);
   }
 
   return (
