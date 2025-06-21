@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 const HomePage = async () => {
   let data: GetProjectInfoResponse | null = null;
   let error: string | null = null;
+  let redisValue: string | null = null;
 
   try {
     data = await getProjectInfo();
@@ -27,8 +28,8 @@ const HomePage = async () => {
 
   try {
     const redis =  await createClient({ url: process.env.STORAGE_REDIS_URL }).connect();
-    const value = await redis.get('test');
-    console.log('Redis value:', value);
+    redisValue = await redis.get('test');
+    console.log('Redis value:', redisValue);
   } catch (err) {
     console.error('Redis connection failed:', err);
   }
@@ -79,7 +80,10 @@ const HomePage = async () => {
 
             {/* Project Description */}
             {data.description && (
-              <p className="text-gray-600 mb-4 italic">{data.description}</p>
+              <>
+                <p className="text-gray-600 mb-4 italic">{data.description}</p>
+                <p className="text-gray-600 mb-4 italic">Redis value: {redisValue ?? 'null'}</p>
+              </>
             )}
 
             {/* Repository Link */}
