@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 const DevOnlyHomePage = async () => {
   if (process.env.NODE_ENV !== 'development') {
-    return null;
+    notFound();
   }
 
   return (

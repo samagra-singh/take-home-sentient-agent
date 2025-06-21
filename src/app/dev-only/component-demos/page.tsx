@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import ExternalLinkIcon from '@/components/icons/external-link.svg';
 import HelpIcon from '@/components/icons/help.svg';
 import MailIcon from '@/components/icons/mail.svg';
@@ -5,7 +7,7 @@ import SentientIcon from '@/components/icons/sentient.svg';
 
 const ComponentDemosPage = async () => {
   if (process.env.NODE_ENV !== 'development') {
-    return null;
+    notFound();
   }
 
   return (
