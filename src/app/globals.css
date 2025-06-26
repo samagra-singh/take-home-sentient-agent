@@ -1,1 +1,79 @@
 @import "tailwindcss";
+
+/* Using uncommon keywords to best avoid conflicts with Tailwind. */
+/* Except for breakpoints, which are defined based on app's responsive goals. */
+@theme {
+  /* Reset default breakpoints */
+  --breakpoint-*: initial;
+  /* Define needed breakpoints */
+  --breakpoint-tablet: 64rem; /* Default value for lg breakpoint */
+
+  /* Ripple colors */
+  --color-ripple-default: rgba(0, 0, 0, 0.3);
+
+  /* Below variables have been defined from Figma. */
+
+  --color-surface-global: #FFFFFF;
+  --color-surface-global-hover: #F5F5F5;
+  --color-boundary-global-light: #E5E5E5;
+
+  /* Base/global font: Agent response text in Figma */
+  --color-global: #212222;
+  --font-weight-global: 500;
+  --text-global-size: 1rem;
+  --leading-global: 1.35;
+  --tracking-global: -0.02em;
+
+  --color-surface-sidebar: #F5F5F5;
+  --color-surface-sidebar-hover: #E5E5E5;
+  --color-navbar-unselected: #A9A9A9;
+  --font-weight-navbar: 600;
+
+  --color-surface-suggestion: #F4F4F4;
+  --color-surface-suggestion-hover: #E5E5E5;
+  --color-suggestion: #808080;
+  --text-suggestion-size: 0.6875rem;
+  --text-suggestion-size-tablet: 1.125rem;
+  --leading-suggestion: 1.55;
+  --font-weight-suggestion: 600;
+  --font-weight-suggestion-tablet: 500;
+
+  --color-boundary-chat-input: #D7D7D7;
+  --color-chat-input-light: #AEAEAE;
+  --color-chat-input-dark: #707070;
+  --color-chat-primary-active: #F1F1F1;
+  --color-chat-primary-active-hover: #E5E5E5;
+  --color-chat-input-placeholder: #808080;
+  --leading-chat-input: 1.55;
+  --color-surface-model-toggle: #F6F6F6;
+  --font-weight-model-toggle: 600;
+
+  --text-message-meta-size: 1.125rem;
+  --leading-message-meta: 1.55;
+  --font-weight-message-meta: 600;
+}
+
+/* [TODO] Define ripple animation within theme. Doesn't seem to be working right now. */
+
+/* Ripple animation for button component */
+@-webkit-keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Custom animation utility for ripple */
+@layer utilities {
+  .animate-ripple {
+    /* Sync timing with components using ripple */
+    animation: ripple 0.6s linear;
+    -webkit-animation: ripple 0.6s linear;
+  }
+}

@@ -17,10 +17,12 @@ const runBuild = () => {
 
       // Next.js version and build process
       { pattern: /^▲ Next\.js \d+\.\d+\.\d+$/ },
+      { pattern: /^- Environments: .env$/, optional: true },
       { pattern: /^Creating an optimized production build \.\.\.$/ },
       { pattern: /^Retrying\s+\d+\/\d+\.\.\.$/, optional: true },
       { pattern: /^✓ Compiled successfully in \d+(\.\d+)?m?s$/ },
       { pattern: /^Linting and checking validity of types \.\.\.$/ },
+      // [TODO] Add handling for console logs from server actions.
       { pattern: /^Collecting page data \.\.\.$/ },
       { pattern: /^Generating static pages \(\d+\/\d+\) \.\.\.$/ },
       { pattern: /^Generating static pages \(\d+\/\d+\)$/, expectMany: true },

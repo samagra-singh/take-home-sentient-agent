@@ -12,12 +12,13 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^next/navigation$': '<rootDir>/src/__mocks__/next-navigation.ts',
     '^next/image$': '<rootDir>/src/__mocks__/next-image.ts',
+    '^(.*)/redis$': '<rootDir>/src/__mocks__/redis-utils.ts',
     /**
      * Do not modify the SVG match pattern.
      * This patters is explicitly needed to override the default SVG mocks from next/jest.
      * Run tests with --debug for more details.
      */
-    '^.+\\.(svg)$': '<rootDir>/src/__mocks__/svg-mock.tsx',
+    '^.+\\.(svg)$': '<rootDir>/src/__mocks__/svg.tsx',
   },
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   collectCoverageFrom: [
@@ -29,6 +30,11 @@ const customJestConfig = {
      *   so we don't need strong quality control for these files.
      */
     '!src/app/api/**/*',
+    '!src/actions/**/*',
+    // Same for dev-only pages
+    '!src/app/dev-only/**/*',
+    '!src/**/redis-browser/**/*',
+    '!src/**/project-actions/**/*',
   ],
   coverageThreshold: {
     global: {

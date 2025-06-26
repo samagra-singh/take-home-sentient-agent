@@ -1,7 +1,7 @@
 import { FlatCompat } from '@eslint/eslintrc';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import jestPlugin from 'eslint-plugin-jest';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
 import testingLibraryPlugin from 'eslint-plugin-testing-library';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -14,11 +14,14 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...compat.extends(
+    'next/core-web-vitals',
+    'next/typescript',
+  ),
   {
     plugins: {
-      '@typescript-eslint': typescriptEslint,
-      'simple-import-sort': simpleImportSort,
+      '@typescript-eslint': typescriptEslintPlugin,
+      'simple-import-sort': simpleImportSortPlugin,
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': [
@@ -34,11 +37,13 @@ const eslintConfig = [
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
       'padded-blocks': ['error', 'never'],
+      'indent': ['error', 2, { SwitchCase: 1 }],
       'no-trailing-spaces': 'error',
       semi: ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       quotes: ['error', 'single', { avoidEscape: true }],
       'jsx-quotes': ['error', 'prefer-double'],
+      'react/jsx-boolean-value': ['error', 'never'],
     },
   },
   {
