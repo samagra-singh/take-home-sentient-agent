@@ -152,7 +152,7 @@ const Messages: React.FC<MessagesProps> = ({
               </p>
             )}
 
-            {message.role === 'agent' && !message.wasStopped && (
+            {message.role === 'agent' && message.agentStatus === 'completed' && !message.wasStopped && (
               <div className="w-full flex align-start justify-start items-center gap-2">
                 <div className="grow flex align-center justify-start items-center gap-2">
                   <Button
