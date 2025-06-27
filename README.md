@@ -11,15 +11,19 @@ Key features implemented:
 - Stop response functionality.
 - Accessibility for buttons and overall app via tooltips.
 - Next.js supported error boundaries, loading states, and 404.
+- Copy response.
 
 Due to time constraints, I was unable to implement some goals like:
 - Text show animation for agent response.
 - Unit testing.
 - Accessibility for nav bar, side bar, and chat area.
 - Better semantic HTML.
+- Also, please ignore the server actions and redis setup, planned to use them for a more interactive experience but time caught up quite fast. 😅
 
-There are some known bugs, only one comes to my mind right now. 😅
+There are some known bugs.
 - User messages can be hard to read on large devices when they are too short.
+- Ripple effect sometimes doesn't work in nav bar on smaller screens.
+- The tooltip sometimes stays open on touch devices when a button is clicked.
 
 Please feel free to reach out with any questions or feedback at [hey@samagrasingh.com](mailto:hey@samagrasingh.com).
 

@@ -14,6 +14,7 @@ const TooltipContainers: React.FC<Record<string, never>> = () => (
        * https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus
        * https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/
        */
+      // [TODO] Explore fix for tooltip showing on button clicks on touch devices.
       clickable
       delayShow={300}
       globalCloseEvents={{
