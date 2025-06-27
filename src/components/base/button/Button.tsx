@@ -4,10 +4,9 @@ import clsx from 'clsx';
 import { useRef, useState } from 'react';
 
 import { TooltipIds } from '@/utils/constants/global';
+import { isTouchDevice } from '@/utils/events';
 
-import {
-  type ButtonProps,
-} from './button.types';
+import { type ButtonProps } from './button.types';
 
 interface Ripple {
   id: number;
@@ -83,6 +82,12 @@ const Button = ({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
 
+    // [TODO] Not working. Explore fix for tooltip showing on button clicks on touch devices.
+    // Prevent tooltip from showing when clicking on a button on touch devices.
+    if (buttonRef?.current === document.activeElement && isTouchDevice()) {
+      buttonRef.current?.blur();
+    }
+
     // Called using keyboard space or enter
     if (event.clientX === 0 && event.clientY === 0) {
       createRipple();
@@ -107,7 +112,6 @@ const Button = ({
         },
       )}
       onClick={handleClick}
-      // onKeyUp={handleKeyUp}
       aria-disabled={disabled}
       aria-label={label}
       data-tooltip-id={TooltipIds.CLICKABLE_NO_FOCUS}

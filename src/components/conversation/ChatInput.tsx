@@ -1,13 +1,14 @@
 'use client';
 
 import clsx from 'clsx';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import PlusCircleIcon from '@/components/base/icons/plus-circle.svg';
 import SendIcon from '@/components/base/icons/send.svg';
 import SentientLargeIcon from '@/components/base/icons/sentient-large.svg';
 import StopIcon from '@/components/base/icons/stop.svg';
+import { isTouchDevice } from '@/utils/events';
 
 import Button from '../base/button';
 import ToggleSwitch from '../base/toggle-switch';
@@ -16,24 +17,36 @@ import Suggestions from './Suggestions';
 
 interface ChatInputProps {
   isNew: boolean;
+  isConversationLoading: boolean;
   sendMessage: (message: string, model: AgentModel) => void;
   stopMessage: () => string;
   isInProgress: boolean;
+  conversationLastUsedModel?: AgentModel;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   isNew,
+  isConversationLoading,
   sendMessage,
   stopMessage,
   isInProgress,
+  conversationLastUsedModel, // Optional
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [prompt, setPrompt] = useState('');
   const [model, setModel] = useState<AgentModel>('4s-mini');
+  const [didUserChangeModel, setDidUserChangeModel] = useState(false);
 
   const handleModelChange = useCallback((value: string) => {
+    setDidUserChangeModel(true);
     setModel(value as AgentModel);
   }, []);
+
+  useEffect(() => {
+    if (conversationLastUsedModel && !didUserChangeModel && model !== conversationLastUsedModel) {
+      setModel(conversationLastUsedModel);
+    }
+  }, [conversationLastUsedModel, didUserChangeModel, model]);
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     sendMessage(suggestion.trim(), model);
@@ -62,7 +75,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   }, []);
 
   const handlePromptKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !isTouchDevice()) {
       e.preventDefault();
       handleMessageSend();
     }
@@ -70,9 +83,27 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
   return (
     <>
-      {isNew && (
-        <div className="shrink-0 mb-3 tablet:mb-9 text-global flex justify-center">
-          <SentientLargeIcon className="size-20 stroke-current" />
+      {(isNew || isConversationLoading) && (
+        <div className={clsx(
+          'shrink-0 mb-3 tablet:mb-9 text-global flex flex-col items-center gap-4',
+          {
+            'animate-pulse duration-700': isConversationLoading,
+          },
+        )}>
+          <SentientLargeIcon
+            className={clsx(
+              'stroke-current',
+              {
+                'size-20': isNew,
+                'size-30': isConversationLoading,
+              },
+            )}
+          />
+          {isConversationLoading && (
+            <p className="text-global">
+              Firing Sentient&apos;s neurons to get our last chat ...
+            </p>
+          )}
         </div>
       )}
       <div className="shrink-0 p-4.5 border border-boundary-chat-input rounded-[0.625rem]">
@@ -85,12 +116,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
           </Button>
           <TextareaAutosize
             ref={inputRef}
-            className="grow min-h-5.5 leading-chat-input placeholder:leading-chat-input placeholder:text-chat-input-placeholder focus:outline-none focus-visible:outline-none resize-none"
+            className="grow min-h-5.5 py-2 leading-chat-input placeholder:leading-chat-input placeholder:text-chat-input-placeholder focus:outline-none focus-visible:outline-none resize-none"
             name="user-prompt"
             minRows={1}
             maxRows={7}
             placeholder="Ask me anything..."
             aria-label="Type your prompt for Sentient here."
+            autoFocus
             onChange={handlePromptChange}
             onKeyDown={handlePromptKeyDown}
           />
@@ -113,20 +145,25 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     isInProgress || prompt.length === 0,
                   'bg-chat-primary-active hover:bg-chat-primary-active-hover focus-visible:bg-chat-primary-active-hover':
                     !isInProgress && prompt.length > 0,
+                  'opacity-25': isConversationLoading,
                 },
               )}
               label={
-                isInProgress
-                  ? 'Stop response generation'
-                  : prompt.length > 0
-                    ? 'Send prompt to Sentient'
-                    : 'Start typing to chat with Sentient'
+                isConversationLoading ?
+                  'Please wait for conversation to load ...'
+                  : isInProgress
+                    ? 'Stop response generation'
+                    : prompt.length > 0
+                      ? 'Send prompt to Sentient'
+                      : 'Start typing to chat with Sentient'
               }
-              disabled={!isInProgress && prompt.length === 0}
+              disabled={isConversationLoading || (!isInProgress && prompt.length === 0)}
               onClick={
-                isInProgress
-                  ? handleMessageStop
-                  : handleMessageSend
+                isConversationLoading
+                  ? () => {}
+                  : isInProgress
+                    ? handleMessageStop
+                    : handleMessageSend
               }
             >
               {isInProgress ? (

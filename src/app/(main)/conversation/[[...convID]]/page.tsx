@@ -26,7 +26,7 @@ const ConversationPage = async ({ params }: {
 
   return (
     <>
-      <Conversation convID={convID?.[0]} />
+      <Conversation key={convID?.[0]} convID={convID?.[0]} />
     </>
   );
 };

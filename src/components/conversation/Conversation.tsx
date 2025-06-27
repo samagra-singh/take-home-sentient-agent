@@ -5,7 +5,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { ChatInput, type ConversationObject } from '.';
 import { type AgentModel } from './conversation.types';
-import { getAgentMockResponse } from './getAgentMockResponse';
+import { getAgentMockResponse, getMockConversation, getMockPromptSummary } from './getAgentMockResponse';
 import Messages from './Messages';
 
 interface ConversationProps {
@@ -18,6 +18,20 @@ const Conversation: React.FC<ConversationProps> = ({ convID }) => {
     title: '',
     messages: [],
   });
+  const [isConversationLoading, setIsConversationLoading] = useState(!!convID);
+  const [conversationLastUsedModel, setConversationLastUsedModel] = useState<AgentModel | null>(null);
+
+  useEffect(() => {
+    if (convID && isConversationLoading) {
+      setTimeout(() => {
+        const conversation = getMockConversation(convID);
+        setConversation(conversation);
+        setConversationLastUsedModel(conversation.messages[conversation.messages.length - 1]?.model ?? null);
+        setIsConversationLoading(false);
+      }, 3500);
+    }
+  }, [convID, isConversationLoading]);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [titleStyles, setTitleStyles] = useState<React.CSSProperties | null>(null);
 
@@ -76,7 +90,7 @@ const Conversation: React.FC<ConversationProps> = ({ convID }) => {
         id: prevConversation.id || uuidV4(),
         title:
           prevConversation.title ||
-          `${message.replace(/\n/g, ' ').slice(0, 80)}${message.replace(/\n/g, ' ').length > 80 ? ' ...' : ''}`,
+          getMockPromptSummary(message),
         messages: [...prevConversation.messages, {
           role: 'user',
           content: [{
@@ -152,7 +166,7 @@ const Conversation: React.FC<ConversationProps> = ({ convID }) => {
         )}
         <Messages
           // To account for the title. 48px + 12px padding - 28px/34px padding in layout..
-          className="pt-5 tablet:pt-6.5"
+          className="pt-10 tablet:pt-6.5"
           title={conversation.title}
           messages={conversation.messages}
           scrollContainerRef={scrollContainerRef}
@@ -160,9 +174,11 @@ const Conversation: React.FC<ConversationProps> = ({ convID }) => {
       </div>
       <ChatInput
         isNew={conversation.id === ''}
+        isConversationLoading={isConversationLoading}
         sendMessage={handleMessageSend}
         stopMessage={handleMessageStop}
         isInProgress={isInProgress}
+        conversationLastUsedModel={conversationLastUsedModel || undefined}
       />
     </>
   );
