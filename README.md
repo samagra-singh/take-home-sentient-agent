@@ -21,7 +21,6 @@ Due to time constraints, I was unable to implement some goals like:
 - Also, please ignore the server actions and redis setup, planned to use them for a more interactive experience but time caught up quite fast. 😅
 
 There are some known bugs.
-- User messages can be hard to read on large devices when they are too short.
 - Ripple effect sometimes doesn't work in nav bar on smaller screens.
 - The tooltip sometimes stays open on touch devices when a button is clicked.
 
