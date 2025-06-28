@@ -7,21 +7,23 @@ Thank you for everybody's assistance with the process so far.
 You can check out the project [here](https://sentient-agent-samagra-singh.vercel.app/).
 
 Key features implemented:
-- Dynamic response for realistic chat experience. You can chat with the model as long as you like for testing.
+- Dynamic response for a realistic chat experience. You can chat with the model as long as you like for testing.
+- Load existing conversations (mock behaviour, same convo loaded for all conv IDs).
+- Basic accessibility for chat experience, better than the default experience, but needs to be refined. 
 - Stop response functionality.
 - Accessibility for buttons and overall app via tooltips.
 - Next.js supported error boundaries, loading states, and 404.
 - Copy response.
 
-Due to time constraints, I was unable to implement some goals like:
-- Text show animation for agent response.
+Due to time constraints, I was unable to implement some goals, like:
+- Gradual text animation for agent response.
 - Unit testing.
-- Accessibility for nav bar, side bar, and chat area.
+- Accessibility for the nav bar, side bar, and chat area.
 - Better semantic HTML.
-- Also, please ignore the server actions and redis setup, planned to use them for a more interactive experience but time caught up quite fast. 😅
+- Also, please ignore the server actions and redis setup, planned to use them for a more interactive experience, but time caught up quite fast. 😅
 
 There are some known bugs.
-- Ripple effect sometimes doesn't work in nav bar on smaller screens.
+- The ripple effect sometimes doesn't work in the nav bar on smaller screens.
 - The tooltip sometimes stays open on touch devices when a button is clicked.
 
 Please feel free to reach out with any questions or feedback at [hey@samagrasingh.com](mailto:hey@samagrasingh.com).
@@ -101,7 +103,7 @@ npm run lint:fix
 
 ### Pre-commit Hooks
 
-- Husky configured for pre-commit hooks
+- Husky is configured for pre-commit hooks
 - Lint-staged runs ESLint on staged files
 - Auto-fixes issues when possible
 - Runs tests for test files
